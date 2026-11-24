@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- Restore the saved theme before the stylesheet paints (no theme flash). -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('salespulse.theme');
+        document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SalesPulse AI Assistant — ask natural-language questions about real coffee sales from index_1.csv and get instant charts with USD/KZT prices.">
+  <title>AI Sales Assistant | SalesPulse</title>
+  <link rel="icon" type="image/png" href="/logo.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body data-page="assistant">
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <!-- HEADER -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo" aria-label="SalesPulse Home">
+        <span class="logo-mark"><img src="logo.png" alt="" class="logo-img" width="24" height="24"></span> SalesPulse
+      </a>
+      <nav class="nav" id="nav" aria-label="Main navigation">
+        <a href="index.html"      class="nav-link" data-page="home">Home</a>
+        <a href="analytics.html"  class="nav-link" data-page="analytics">Analytics</a>
+        <a href="gallery.html"    class="nav-link" data-page="gallery">Gallery</a>
+        <a href="assistant.html"  class="nav-link" data-page="assistant">AI Assistant</a>
+        <a href="about.html"      class="nav-link" data-page="about">About</a>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to light theme" aria-pressed="false" title="Switch to light theme">
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-toggle-thumb">
+              <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            </span>
+          </span>
+        </button>
+      </nav>
+      <button class="burger" id="burger" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- PAGE BANNER -->
+    <section class="page-banner fade-in" aria-labelledby="assistant-heading">
+      <div class="container banner-inner">
+        <h1 id="assistant-heading">AI Sales Assistant</h1>
+        <p>Ask questions about the coffee transactions in <strong>index_1.csv</strong> and get instant answers with charts.</p>
+        <div class="agent-mode" id="agent-mode" aria-live="polite">
+          <span class="mode-dot" aria-hidden="true"></span> Local Data Engine Active
+        </div>
+        <p class="rate-note"><span data-exchange-rate>1 USD ≈ 455 ₸</span> · converted live in every answer</p>
+      </div>
+    </section>
+
+    <!-- CHAT INTERFACE -->
+    <section class="section assistant-section fade-in" aria-label="AI Sales Assistant Interface">
+      <div class="container">
+        <div class="chat-container">
+          <div class="chat-layout">
+            <div class="chat-top-bar">
+              <div class="chat-top-brand">
+                <span class="chat-top-logo">
+                  <img src="logo.png" alt="" width="24" height="24">
+                </span>
+                <span class="chat-top-copy">
+                  <span class="chat-top-title">AI Sales Bot</span>
+                  <span class="chat-top-dataset">index_1.csv</span>
+                </span>
+              </div>
+              <button type="button" id="chat-reset" class="chat-reset-btn" aria-label="Clear chat" title="Clear chat">
+                <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+                  <path d="M4 5v6h6M20 19v-6h-6M5.5 15a7 7 0 0 0 11.8 2M18.5 9A7 7 0 0 0 6.7 7" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            </div>
+
+            <div class="chat-messages" id="chat-messages" role="log" aria-live="polite" aria-atomic="false">
+              <div class="message-row bot-row">
+                <div class="message-avatar" aria-hidden="true">🤖</div>
+                <div class="message-bubble bot-message">
+                  <div class="message-text">
+                    Hello! I work directly with the 3,636 coffee transactions from index_1.csv. Ask me about revenue,
+                    best months, best-selling drinks, card vs cash, categories or trends — I'll build a chart for you.
+                  </div>
+                </div>
+              </div>
+
+              <!-- Compact examples fill the empty thread until the first question -->
+              <div class="chat-empty-hints" id="chat-empty-hints">
+                <p class="chat-empty-hints-title">Try asking about</p>
+                <div class="chat-empty-hint-grid">
+                  <button type="button" class="chat-empty-hint" data-query="Show the trend">
+                    <span class="chat-empty-hint-icon" aria-hidden="true">📈</span>
+                    <span class="chat-empty-hint-text">
+                      <strong>Revenue dynamics</strong>
+                      <small>Line chart by day or month</small>
+                    </span>
+                  </button>
+                  <button type="button" class="chat-empty-hint" data-query="Top drinks by revenue">
+                    <span class="chat-empty-hint-icon" aria-hidden="true">☕</span>
+                    <span class="chat-empty-hint-text">
+                      <strong>Top drinks</strong>
+                      <small>Bars by revenue or cups</small>
+                    </span>
+                  </button>
+                  <button type="button" class="chat-empty-hint" data-query="Compare card and cash">
+                    <span class="chat-empty-hint-icon" aria-hidden="true">💳</span>
+                    <span class="chat-empty-hint-text">
+                      <strong>Payment split</strong>
+                      <small>Doughnut for card vs cash</small>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="chat-bottom-bar">
+              <div class="quick-replies" aria-label="Frequently asked questions">
+                <button type="button" class="quick-reply-btn" data-query="What was the best month?">Best month</button>
+                <button type="button" class="quick-reply-btn" data-query="Which drink earns the most?">Top drinks by revenue</button>
+                <button type="button" class="quick-reply-btn" data-query="Compare card and cash">Card vs cash</button>
+                <button type="button" class="quick-reply-btn" data-query="Show revenue breakdown">Revenue breakdown</button>
+                <button type="button" class="quick-reply-btn" data-query="Most sold drinks by cups">Most sold drinks</button>
+                <button type="button" class="quick-reply-btn" data-query="Show the trend">Show the trend</button>
+                <button type="button" class="quick-reply-btn" data-query="Explain KPIs">Explain KPIs</button>
+              </div>
+
+              <div class="chat-input-area">
+                <input type="text" id="chat-input" class="chat-input" placeholder="Ask about coffee sales…" aria-label="Type your question" autocomplete="off">
+                <button type="button" id="chat-send" class="chat-send-btn" aria-label="Send message" title="Send message (Enter)" disabled>
+                  <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true" focusable="false">
+                    <path d="M3.4 20.4 21 12 3.4 3.6 3.4 10.1 15.2 12 3.4 13.9Z" fill="currentColor"/>
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dedicated chart card: placed OUTSIDE the fixed-height chat window,
+             so the full chart is always visible instead of being clipped. -->
+        <section class="agent-chart-card card" aria-labelledby="agent-chart-heading">
+          <div class="chart-header">
+            <div>
+              <h3 id="agent-chart-heading">Latest Analysis Chart</h3>
+              <p class="chart-subtitle">Generated from your most recent question</p>
+            </div>
+          </div>
+          <div id="agent-chart-area" class="agent-chart-area" hidden>
+            <canvas id="agent-chart" aria-label="Agent visual sales analysis chart" role="img"></canvas>
+          </div>
+          <p id="agent-chart-placeholder" class="agent-chart-placeholder">
+            Ask a question above — a full-size chart will appear here.
+          </p>
+        </section>
+      </div>
+    </section>
+
+    <!-- CAPABILITIES -->
+    <section class="section assistant-capabilities fade-in" aria-labelledby="capabilities-heading">
+      <div class="container">
+        <div class="section-header text-center">
+          <h2 id="capabilities-heading">Assistant Capabilities</h2>
+          <p class="section-subtitle">Natural-language questions mapped directly to the CSV data</p>
+        </div>
+
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-icon feature-icon--purple" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" focusable="false">
+                <path d="M13 2 4.5 13.2h5.1L9 22l8.5-11.4h-5.2L13 2Z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Local Analytical Processing</h3>
+            <p>Queries run entirely in your browser. No server, no latency — the assistant scans all 3,636 rows in memory.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon feature-icon--lime" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" focusable="false">
+                <path d="M4 19V5m0 14h16M7.5 15l3.5-4 3 2.5 4.5-6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>On-the-Fly Visualizations</h3>
+            <p>Comparative questions produce Chart.js charts inside the chat and in the full-size panel below it.</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon feature-icon--purple" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="20" height="20" focusable="false">
+                <path d="M4 8h13m0 0-3-3m3 3-3 3M20 16H7m0 0 3-3m-3 3 3 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </div>
+            <h3>Dual Currency</h3>
+            <p>Source amounts are in USD; every figure is paired with its tenge equivalent using a live USD/KZT rate.</p>
+          </article>
+        </div>
+
+        <div class="assistant-examples">
+          <h3>Sample Prompts to Explore</h3>
+          <div class="examples-grid">
+            <button type="button" class="example-item sample-prompt-card" data-query="What was the total revenue?">
+              <span class="example-badge">Revenue</span>
+              <span class="example-text">"What was the total revenue?"</span>
+              <svg class="example-arrow" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+                <path d="M5 12h13m0 0-5-5m5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button type="button" class="example-item sample-prompt-card" data-query="Which drink earns the most?">
+              <span class="example-badge">Products</span>
+              <span class="example-text">"Which drink earns the most?"</span>
+              <svg class="example-arrow" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+                <path d="M5 12h13m0 0-5-5m5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button type="button" class="example-item sample-prompt-card" data-query="How did October 2024 perform?">
+              <span class="example-badge">Seasonality</span>
+              <span class="example-text">"How did October 2024 perform?"</span>
+              <svg class="example-arrow" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+                <path d="M5 12h13m0 0-5-5m5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+            <button type="button" class="example-item sample-prompt-card" data-query="Compare card and cash payments">
+              <span class="example-badge">Payments</span>
+              <span class="example-text">"Compare card and cash payments"</span>
+              <svg class="example-arrow" viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false">
+                <path d="M5 12h13m0 0-5-5m5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <p>Author: Ырысбек Санжар, Ақылбаев Карим</p>
+        <p>Course: Information and Communication Technologies (ICT)</p>
+        <p>Narxoz University, School of Digital Technologies</p>
+        <p>Educational program: ICT rus1</p>
+        <p>&copy; 2026 SalesPulse. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BACKGROUND MUSIC -->
+  <div class="music-player" id="music-player" aria-label="Background music controls">
+    <button class="music-btn" id="music-toggle" aria-label="Play background music" title="Play/Pause">
+      <span id="music-icon">▶</span>
+    </button>
+    <input type="range" class="music-volume" id="music-volume" min="0" max="100" value="30" aria-label="Volume">
+    <button class="music-btn" id="music-mute" aria-label="Mute" title="Mute/Unmute">
+      <span id="mute-icon">🔊</span>
+    </button>
+  </div>
+  <audio id="bg-music" src="assets/audio/ambient.wav" loop preload="none"></audio>
+
+  <!-- SCRIPTS -->
+  <script src="js/data.js"></script>
+  <script src="js/currency.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/assistant.js"></script>
+</body>
+</html>

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600" role="img" aria-label="SalesPulse analytics visual">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#18181C"/><stop offset="1" stop-color="#24242B"/></linearGradient>
+    <linearGradient id="line" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#723BFA"/><stop offset="1" stop-color="#B9F500"/></linearGradient>
+  </defs>
+  <rect width="1200" height="600" fill="url(#bg)"/>
+  <g opacity="0.14" stroke="#FFFFFF"><line y1="120" y2="120" x2="1200"/><line y1="240" y2="240" x2="1200"/><line y1="360" y2="360" x2="1200"/><line y1="480" y2="480" x2="1200"/></g>
+  <circle cx="960" cy="150" r="230" fill="#723BFA" opacity="0.2"/>
+  <circle cx="1040" cy="480" r="150" fill="#B9F500" opacity="0.1"/>
+  <rect x="690" y="90" width="420" height="390" rx="22" fill="#1F1F25" stroke="#723BFA" stroke-opacity="0.55"/>
+  <text x="730" y="140" font-family="Poppins, Segoe UI, sans-serif" font-size="22" font-weight="700" fill="#FFFFFF">LIVE REVENUE</text>
+  <text x="730" y="188" font-family="Poppins, Segoe UI, sans-serif" font-size="38" font-weight="800" fill="#B9F500">$115,431.58</text>
+  <path d="M730 350 L820 295 L910 320 L1000 220 L1070 255" fill="none" stroke="url(#line)" stroke-width="8" stroke-linecap="round"/>
+  <rect x="730" y="360" width="26" height="70" rx="7" fill="#723BFA" opacity="0.72"/><rect x="778" y="320" width="26" height="110" rx="7" fill="#B9F500" opacity="0.72"/><rect x="826" y="340" width="26" height="90" rx="7" fill="#723BFA" opacity="0.72"/><rect x="874" y="280" width="26" height="150" rx="7" fill="#B9F500" opacity="0.72"/><rect x="922" y="300" width="26" height="130" rx="7" fill="#723BFA" opacity="0.72"/><rect x="970" y="245" width="26" height="185" rx="7" fill="#B9F500" opacity="0.72"/><rect x="1018" y="265" width="26" height="165" rx="7" fill="#723BFA" opacity="0.72"/>
+</svg>

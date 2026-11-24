@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- =====================================================================
+       METADATA & DOCUMENT CONFIGURATION
+       The student can explain:
+       - UTF-8 character encoding ensures accurate symbol rendering.
+       - Responsive viewport tag ensures proper mobile and desktop scaling.
+       - SEO-friendly meta description provides context for web crawlers.
+  ====================================================================== -->
+  <meta charset="UTF-8">
+
+  <!-- Restore the saved theme before the stylesheet paints (no theme flash). -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('salespulse.theme');
+        document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="About SalesPulse - Learn about the sales analysis web platform, technology stack, AI tools integration, and student developer details for the ICT examination project.">
+  <title>About — SalesPulse Sales Analysis Platform</title>
+  <link rel="icon" type="image/png" href="/logo.png" />
+
+  <!-- =====================================================================
+       GOOGLE FONTS (Inter for UI body text & Poppins for bold modern headings)
+       Preconnecting reduces latency during DNS resolution and TLS handshake.
+  ====================================================================== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- =====================================================================
+       MAIN STYLESHEET
+       Contains CSS custom properties (variables), responsive grids,
+       interactive component styles, and smooth animation transitions.
+  ====================================================================== -->
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body data-page="about">
+
+  <!-- =====================================================================
+       GLOBAL SITE HEADER & NAVIGATION BAR
+       - Fixed/sticky layout with brand logo, main navigation, and mobile hamburger.
+       - Fully keyboard accessible and tagged with ARIA attributes.
+  ====================================================================== -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo" aria-label="SalesPulse Home">
+        <span class="logo-mark"><img src="logo.png" alt="" class="logo-img" width="24" height="24"></span> SalesPulse
+      </a>
+      <nav class="nav" id="nav" aria-label="Main navigation">
+        <a href="index.html"      class="nav-link" data-page="home">Home</a>
+        <a href="analytics.html"  class="nav-link" data-page="analytics">Analytics</a>
+        <a href="gallery.html"    class="nav-link" data-page="gallery">Gallery</a>
+        <a href="assistant.html"  class="nav-link" data-page="assistant">AI Assistant</a>
+        <a href="about.html"      class="nav-link" data-page="about">About</a>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to light theme" aria-pressed="false" title="Switch to light theme">
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-toggle-thumb">
+              <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            </span>
+          </span>
+        </button>
+      </nav>
+      <button class="burger" id="burger" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- =====================================================================
+       MAIN PAGE CONTENT AREA
+       Contains structured, semantic sections explaining:
+       1. Project vision & dataset origin (index_1.csv transactions)
+       2. Core web technologies used (HTML5, CSS3, JavaScript ES6+, Chart.js, etc.)
+       3. AI tools utilized in media generation & NLP assistance
+       4. Student developer credentials & university program details
+  ====================================================================== -->
+  <main class="main-content" id="main-content">
+
+    <!-- PAGE HERO BANNER -->
+    <section class="page-banner fade-in" aria-labelledby="banner-heading">
+      <div class="container">
+        <h1 id="banner-heading">About SalesPulse</h1>
+        <p class="banner-subtitle">Learn about the project, the team, and the technology behind this platform.</p>
+      </div>
+    </section>
+
+    <!-- SECTION 1: ABOUT THE PROJECT -->
+    <section class="section about-project fade-in" aria-labelledby="about-project-heading">
+      <div class="container about-project-container">
+        <div class="section-header">
+          <h2 id="about-project-heading">About the Project</h2>
+        </div>
+
+        <div class="about-prose-card">
+          <p>SalesPulse is a web-based platform for sales analysis and visualization of key business indicators, developed as a university project for the Information and Communication Technologies (ICT) course at <span class="about-term">Narxoz University</span>, School of Digital Technologies.</p>
+          <p>The platform demonstrates how modern front-end technologies — <span class="about-term">HTML5, CSS3, and vanilla JavaScript</span> — can be used to build interactive dashboards, AI-powered assistants, and data-driven visualizations without any frameworks or build tools.</p>
+          <p>The dashboard is powered by <span class="about-term">index_1.csv</span>: 3,636 real coffee-shop transactions recorded between 1 March 2024 and 23 March 2025. Each row contains a date, time, payment method, anonymised card number, drink category and product name with its USD price.</p>
+        </div>
+
+        <!-- Project Highlights Summary Cards -->
+        <div class="project-stats-grid about-meta-grid">
+          <article class="stat-pill about-meta-card">
+            <span class="about-meta-icon about-meta-icon--purple" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="19" height="19" focusable="false">
+                <path d="M7 3h7l4 4v14H7a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2Zm7 0v5h4M9 13h7M9 17h5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <div class="about-meta-copy">
+              <span class="about-meta-label">Data Source</span>
+              <strong class="about-meta-value">index_1.csv</strong>
+            </div>
+          </article>
+
+          <article class="stat-pill about-meta-card">
+            <span class="about-meta-icon about-meta-icon--lime" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="19" height="19" focusable="false">
+                <path d="M4 8h13m0 0-3-3m3 3-3 3M20 16H7m0 0 3-3m-3 3 3 3" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <div class="about-meta-copy">
+              <span class="about-meta-label">Currency</span>
+              <strong class="about-meta-value">USD + live KZT</strong>
+            </div>
+          </article>
+
+          <article class="stat-pill about-meta-card">
+            <span class="about-meta-icon about-meta-icon--purple" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="19" height="19" focusable="false">
+                <rect x="4" y="5" width="16" height="15" rx="2" fill="none" stroke="currentColor" stroke-width="1.8"/>
+                <path d="M4 10h16M8 3v4m8-4v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+              </svg>
+            </span>
+            <div class="about-meta-copy">
+              <span class="about-meta-label">Period</span>
+              <strong class="about-meta-value">Mar 2024 – Mar 2025</strong>
+            </div>
+          </article>
+
+          <article class="stat-pill about-meta-card">
+            <span class="about-meta-icon about-meta-icon--lime" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="19" height="19" focusable="false">
+                <path d="M4 8h11a5 5 0 0 1 0 10H9a5 5 0 0 1-5-5V8Zm11 3v5M8 5v2m4-2v2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            <div class="about-meta-copy">
+              <span class="about-meta-label">2 Categories</span>
+              <strong class="about-meta-value">Coffee, Chocolate drinks</strong>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 2: TECHNOLOGIES USED -->
+    <section class="section tech-used fade-in" aria-labelledby="tech-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="tech-heading">Technologies Used</h2>
+          <p class="section-subtext">The core technical building blocks powering the client-side architecture of SalesPulse.</p>
+        </div>
+
+        <div class="grid-3 fade-in">
+          <!-- Card 1: HTML5 -->
+          <article class="card tech-card">
+            <div class="card-icon" aria-hidden="true">🌐</div>
+            <h3 class="card-title">HTML5</h3>
+            <p class="card-desc">Semantic document structure ensuring high web accessibility (WCAG), clean heading hierarchies, and standard audio/video integration.</p>
+          </article>
+
+          <!-- Card 2: CSS3 -->
+          <article class="card tech-card">
+            <div class="card-icon" aria-hidden="true">🎨</div>
+            <h3 class="card-title">CSS3</h3>
+            <p class="card-desc">Modern responsive styling using custom CSS variables, CSS Grid, Flexbox, media queries, and smooth hardware-accelerated animations.</p>
+          </article>
+
+          <!-- Card 3: JavaScript ES6+ -->
+          <article class="card tech-card">
+            <div class="card-icon" aria-hidden="true">⚡</div>
+            <h3 class="card-title">JavaScript ES6+</h3>
+            <p class="card-desc">Framework-free vanilla JavaScript featuring arrow functions, array aggregation methods, dynamic DOM updates, and custom client-side routing.</p>
+          </article>
+
+          <!-- Card 4: Chart.js -->
+          <article class="card tech-card">
+            <div class="card-icon" aria-hidden="true">📈</div>
+            <h3 class="card-title">Chart.js</h3>
+            <p class="card-desc">High-performance canvas-based charting library rendering responsive bar, line, and doughnut visual representations of retail sales metrics.</p>
+          </article>
+
+          <!-- Card 5: Google Fonts -->
+          <article class="card tech-card">
+            <div class="card-icon" aria-hidden="true">🔤</div>
+            <h3 class="card-title">Google Fonts</h3>
+            <p class="card-desc">Typography powered by 'Poppins' for clear geometric headings and 'Inter' for highly legible, balanced interface copy across all devices.</p>
+          </article>
+
+          <!-- Card 6: GitHub Pages -->
+          <article class="card tech-card">
+            <div class="card-icon" aria-hidden="true">🚀</div>
+            <h3 class="card-title">GitHub Pages</h3>
+            <p class="card-desc">Continuous deployment and fast, reliable worldwide hosting directly from the version-controlled Git project repository.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 3: AI TOOLS USED IN THIS PROJECT -->
+    <section class="section ai-tools fade-in" aria-labelledby="ai-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="ai-heading">AI Tools Used in This Project</h2>
+          <p class="section-subtext">How generative artificial intelligence was integrated into the creative and technical workflows.</p>
+        </div>
+
+        <div class="grid-3 fade-in">
+          <!-- AI Card 1: ChatGPT / Claude -->
+          <article class="card ai-card">
+            <div class="card-icon" aria-hidden="true">🤖</div>
+            <h3 class="card-title">ChatGPT / Claude</h3>
+            <p class="card-desc">Used for generating analytical text, code assistance, and powering the AI Sales Assistant's natural language understanding.</p>
+          </article>
+
+          <!-- AI Card 2: Midjourney / DALL-E -->
+          <article class="card ai-card">
+            <div class="card-icon" aria-hidden="true">🖼️</div>
+            <h3 class="card-title">Midjourney / DALL-E</h3>
+            <p class="card-desc">AI image generation tools used to create the gallery visuals and hero background artwork for the site.</p>
+          </article>
+
+          <!-- AI Card 3: Suno AI -->
+          <article class="card ai-card">
+            <div class="card-icon" aria-hidden="true">🎵</div>
+            <h3 class="card-title">Suno AI</h3>
+            <p class="card-desc">AI music generation platform used to create the ambient background music track for the site.</p>
+          </article>
+
+          <!-- AI Card 4: D-ID / HeyGen -->
+          <article class="card ai-card">
+            <div class="card-icon" aria-hidden="true">🎥</div>
+            <h3 class="card-title">D-ID / HeyGen</h3>
+            <p class="card-desc">AI avatar tools used to generate the video presenter that introduces the SalesPulse project.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECTION 4: ABOUT THE DEVELOPER -->
+    <section class="section about-dev-section fade-in" aria-labelledby="dev-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="dev-heading">About the Developer</h2>
+          <p class="section-subtext">Project creator and examination candidate profile.</p>
+        </div>
+
+        <div class="card about-developer fade-in">
+          <div class="developer-avatar" aria-hidden="true">👨‍💻</div>
+          <h3>Ырысбек Санжар, Ақылбаев Карим</h3>
+          <p>Student at Narxoz University, School of Digital Technologies</p>
+          <p>Educational program: ICT rus1</p>
+          <p>Course: Information and Communication Technologies (ICT)</p>
+          <p>This project was created as part of the final examination to demonstrate skills in web development, data visualization, and integration of AI tools.</p>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- =====================================================================
+       GLOBAL SITE FOOTER
+       Standardized academic examination footer containing project credentials.
+  ====================================================================== -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <p>Author: Ырысбек Санжар, Ақылбаев Карим</p>
+        <p>Course: Information and Communication Technologies (ICT)</p>
+        <p>Narxoz University, School of Digital Technologies</p>
+        <p>Educational program: ICT rus1</p>
+        <p>&copy; 2026 SalesPulse. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- =====================================================================
+       PERSISTENT BACKGROUND MUSIC PLAYER
+       Allows the user to control ambient background audio (play/pause, volume, mute).
+  ====================================================================== -->
+  <div class="music-player" id="music-player" aria-label="Background music controls">
+    <button class="music-btn" id="music-toggle" aria-label="Play background music" title="Play/Pause">
+      <span id="music-icon">▶</span>
+    </button>
+    <input type="range" class="music-volume" id="music-volume" min="0" max="100" value="30" aria-label="Volume">
+    <button class="music-btn" id="music-mute" aria-label="Mute" title="Mute/Unmute">
+      <span id="mute-icon">🔊</span>
+    </button>
+  </div>
+  <audio id="bg-music" src="assets/audio/ambient.wav" loop preload="none"></audio>
+
+  <!-- =====================================================================
+       FLOATING CHATBOT WIDGET
+       Quick-access conversational assistant providing KPI insights & site orientation.
+  ====================================================================== -->
+  <div class="chat-float" id="chat-float">
+    <button class="chat-float-btn" id="chat-float-btn" aria-label="Open chat assistant">💬</button>
+    <div class="chat-float-window" id="chat-float-window" hidden>
+      <div class="chat-float-header">
+        <span>SalesPulse Assistant</span>
+        <button class="chat-float-close" id="chat-float-close" aria-label="Close chat">&times;</button>
+      </div>
+      <div class="chat-float-messages" id="chat-float-messages"></div>
+      <div class="chat-float-quick">
+        <button class="chat-quick-btn" data-msg="What is this site about?">What is this site about?</button>
+        <button class="chat-quick-btn" data-msg="Explain KPIs">Explain KPIs</button>
+        <button class="chat-quick-btn" data-msg="How do I read the charts?">How do I read the charts?</button>
+      </div>
+      <div class="chat-float-input-row">
+        <input type="text" id="chat-float-input" placeholder="Ask a question…" aria-label="Type a message">
+        <button id="chat-float-send" aria-label="Send">➤</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================================
+       SCRIPTS
+       1. data.js - Sales datasets and product catalog data structures
+       2. main.js - Core application behaviors (navigation, audio, chat widget, scroll animation)
+  ====================================================================== -->
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

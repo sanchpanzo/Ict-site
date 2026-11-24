@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+
+  <!-- Restore the saved theme before the stylesheet paints (no theme flash). -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('salespulse.theme');
+        document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SalesPulse Analytics Dashboard — real coffee-shop transaction data from index_1.csv with USD/KZT prices, interactive charts and export.">
+  <title>Sales Analytics Dashboard | SalesPulse</title>
+  <link rel="icon" type="image/png" href="/logo.png" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-page="analytics">
+
+  <!-- HEADER & NAVIGATION -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo" aria-label="SalesPulse Home">
+        <span class="logo-mark"><img src="logo.png" alt="" class="logo-img" width="24" height="24"></span> SalesPulse
+      </a>
+      <nav class="nav" id="nav" aria-label="Main navigation">
+        <a href="index.html"      class="nav-link" data-page="home">Home</a>
+        <a href="analytics.html"  class="nav-link" data-page="analytics">Analytics</a>
+        <a href="gallery.html"    class="nav-link" data-page="gallery">Gallery</a>
+        <a href="assistant.html"  class="nav-link" data-page="assistant">AI Assistant</a>
+        <a href="about.html"      class="nav-link" data-page="about">About</a>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to light theme" aria-pressed="false" title="Switch to light theme">
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-toggle-thumb">
+              <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            </span>
+          </span>
+        </button>
+      </nav>
+      <button class="burger" id="burger" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="main-content">
+
+    <!-- PAGE BANNER -->
+    <section class="page-banner fade-in">
+      <div class="container">
+        <h1>Sales Analytics Dashboard</h1>
+        <p>Explore 3,636 real coffee transactions from March 2024 to March 2025. All amounts are shown in USD with the live tenge equivalent.</p>
+        <span class="demo-badge">
+          <span class="badge-dot"></span>
+          Source: <strong>index_1.csv</strong>
+          <span class="badge-divider">·</span>
+          <span data-exchange-rate>1 USD ≈ 455 ₸</span>
+        </span>
+      </div>
+    </section>
+
+    <!-- COMPACT FILTERS & KPI CARDS -->
+    <section class="section controls-kpi-section fade-in" aria-labelledby="kpis-heading">
+      <div class="container">
+        <h2 id="kpis-heading" class="visually-hidden">Dashboard Controls and Key Indicators</h2>
+
+        <div class="filter-bar card" role="search" aria-label="Sales data filters">
+          <div class="filter-cluster filter-cluster--left">
+            <div class="filter-group filter-group--payment">
+              <label for="filter-payment" id="filter-payment-label">Payment</label>
+              <select id="filter-payment" aria-label="Filter by payment method">
+                <option value="all">All payments</option>
+                <option value="Card">Card</option>
+                <option value="Cash">Cash</option>
+              </select>
+              <div class="segmented-options" role="group" aria-labelledby="filter-payment-label" data-filter="filter-payment">
+                <button type="button" class="segmented-option" data-value="Card" aria-pressed="false">Card</button>
+                <button type="button" class="segmented-option" data-value="Cash" aria-pressed="false">Cash</button>
+                <button type="button" class="segmented-option" data-value="all" aria-pressed="true">All payments</button>
+              </div>
+            </div>
+
+            <div class="filter-group filter-group--category">
+              <label for="filter-category" id="filter-category-label">Category</label>
+              <select id="filter-category" aria-label="Filter by drink category">
+                <option value="all">All categories</option>
+                <option value="Coffee">Coffee</option>
+                <option value="Chocolate drinks">Chocolate drinks</option>
+              </select>
+              <div class="segmented-options" role="group" aria-labelledby="filter-category-label" data-filter="filter-category">
+                <button type="button" class="segmented-option" data-value="Coffee" aria-pressed="false">Coffee</button>
+                <button type="button" class="segmented-option" data-value="Chocolate drinks" aria-pressed="false">Chocolate drinks</button>
+                <button type="button" class="segmented-option" data-value="all" aria-pressed="true">All categories</button>
+              </div>
+            </div>
+
+            <div class="filter-group filter-group--month">
+              <label for="filter-month">Month</label>
+              <select id="filter-month" aria-label="Filter by month">
+                <option value="all">All months</option>
+                <option value="2024-03">Mar 2024</option>
+                <option value="2024-04">Apr 2024</option>
+                <option value="2024-05">May 2024</option>
+                <option value="2024-06">Jun 2024</option>
+                <option value="2024-07">Jul 2024</option>
+                <option value="2024-08">Aug 2024</option>
+                <option value="2024-09">Sep 2024</option>
+                <option value="2024-10">Oct 2024</option>
+                <option value="2024-11">Nov 2024</option>
+                <option value="2024-12">Dec 2024</option>
+                <option value="2025-01">Jan 2025</option>
+                <option value="2025-02">Feb 2025</option>
+                <option value="2025-03">Mar 2025</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="filter-actions">
+            <button id="btn-reset-filters" class="btn btn-secondary btn-sm" aria-label="Reset all filters to default">
+              <span aria-hidden="true">↺</span> Reset
+            </button>
+          </div>
+        </div>
+
+        <div class="kpi-grid">
+          <article class="kpi-card card">
+            <div class="kpi-header">
+              <span class="kpi-title">Total Revenue</span>
+              <span class="kpi-icon" aria-hidden="true">💰</span>
+            </div>
+            <div class="kpi-value-wrapper">
+              <span class="kpi-value" id="kpi-revenue-value">—</span>
+            </div>
+            <span class="kpi-subtitle">USD, with live KZT equivalent</span>
+          </article>
+
+          <article class="kpi-card card">
+            <div class="kpi-header">
+              <span class="kpi-title">Transactions</span>
+              <span class="kpi-icon" aria-hidden="true">🧾</span>
+            </div>
+            <div class="kpi-value-wrapper">
+              <span class="kpi-value" id="kpi-transactions-value">—</span>
+            </div>
+            <span class="kpi-subtitle">Rows in index_1.csv</span>
+          </article>
+
+          <article class="kpi-card card">
+            <div class="kpi-header">
+              <span class="kpi-title">Average Check</span>
+              <span class="kpi-icon" aria-hidden="true">💵</span>
+            </div>
+            <div class="kpi-value-wrapper">
+              <span class="kpi-value" id="kpi-aov-value">—</span>
+            </div>
+            <span class="kpi-subtitle">Revenue per transaction</span>
+          </article>
+
+          <article class="kpi-card card">
+            <div class="kpi-header">
+              <span class="kpi-title">Best Month</span>
+              <span class="kpi-icon" aria-hidden="true">📅</span>
+            </div>
+            <div class="kpi-value-wrapper">
+              <span class="kpi-value" id="kpi-best-month-value">—</span>
+            </div>
+            <span class="kpi-subtitle">Peak revenue period</span>
+          </article>
+
+          <article class="kpi-card card">
+            <div class="kpi-header">
+              <span class="kpi-title">Top Drink</span>
+              <span class="kpi-icon" aria-hidden="true">☕</span>
+            </div>
+            <div class="kpi-value-wrapper">
+              <span class="kpi-value kpi-value-text" id="kpi-best-product-value">—</span>
+            </div>
+            <span class="kpi-subtitle">Highest revenue by product</span>
+          </article>
+
+          <article class="kpi-card card">
+            <div class="kpi-header">
+              <span class="kpi-title">Card Share</span>
+              <span class="kpi-icon" aria-hidden="true">💳</span>
+            </div>
+            <div class="kpi-value-wrapper">
+              <span class="kpi-value" id="kpi-card-share-value">—</span>
+            </div>
+            <span class="kpi-subtitle">Transactions paid by card</span>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- INTERACTIVE CHARTS -->
+    <section class="section charts-section fade-in" aria-labelledby="charts-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="charts-heading" class="section-title">Visual Performance Trends</h2>
+          <p class="section-description">Every chart is recalculated from the active filters above.</p>
+        </div>
+
+        <div class="charts-grid">
+          <div class="chart-container card">
+            <div class="chart-header">
+              <h3 id="monthly-chart-title">Monthly Revenue Dynamics</h3>
+            </div>
+            <div class="chart-canvas-wrapper">
+              <canvas id="chart-monthly" aria-label="Monthly revenue chart" role="img"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-container card">
+            <div class="chart-header">
+              <h3>Revenue by Payment Method</h3>
+            </div>
+            <div class="chart-canvas-wrapper">
+              <canvas id="chart-payment" aria-label="Revenue split by card and cash" role="img"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-container card">
+            <div class="chart-header">
+              <h3>Sales Breakdown by Category</h3>
+            </div>
+            <div class="chart-canvas-wrapper">
+              <canvas id="chart-category" aria-label="Sales breakdown by drink category" role="img"></canvas>
+            </div>
+          </div>
+
+          <div class="chart-container card">
+            <div class="chart-header">
+              <h3>Top Drinks by Revenue</h3>
+            </div>
+            <div class="chart-canvas-wrapper">
+              <canvas id="chart-top-products" aria-label="Top drinks by revenue" role="img"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DETAILED TRANSACTION TABLE -->
+    <section class="section table-section fade-in" aria-labelledby="table-heading">
+      <div class="container">
+        <div class="section-header">
+          <h2 id="table-heading" class="section-title">Detailed Transactions</h2>
+          <p class="section-description">Search, sort, browse and export the exact rows loaded from the CSV.</p>
+        </div>
+
+        <div class="table-controls">
+          <input type="text" id="table-search" placeholder="Search by date, drink, card, payment…" class="table-search" aria-label="Search table">
+          <button id="btn-download-csv" class="btn btn-primary btn-sm" aria-label="Download current filtered data as CSV">📥 Download CSV</button>
+        </div>
+
+        <div class="table-wrapper">
+          <table class="data-table" id="sales-table">
+            <thead>
+              <tr>
+                <th data-sort="date">Date ↕</th>
+                <th data-sort="time">Time ↕</th>
+                <th data-sort="paymentType">Payment ↕</th>
+                <th data-sort="card">Card ↕</th>
+                <th data-sort="category">Category ↕</th>
+                <th data-sort="product">Product ↕</th>
+                <th data-sort="revenue">Amount (USD) ↕</th>
+                <th data-sort="kzt">Amount (KZT) ↕</th>
+              </tr>
+            </thead>
+            <tbody id="table-body"></tbody>
+          </table>
+        </div>
+
+        <div id="pagination" class="pagination" aria-label="Table pagination navigation"></div>
+      </div>
+    </section>
+
+    <!-- ANALYSIS & INSIGHTS -->
+    <section class="analytics-text section fade-in" aria-labelledby="analysis-heading">
+      <div class="container">
+        <h2 id="analysis-heading" class="section-title">Analysis &amp; Insights</h2>
+
+        <div class="analytics-content-grid">
+          <article class="analysis-card card">
+            <h3>Overview</h3>
+            <ul>
+              <li><span class="insight-white">Dataset:</span> covers <span class="insight-white">3,636 transactions</span> from <span class="insight-white">1 March 2024</span> to <span class="insight-white">23 March 2025</span>.</li>
+              <li><span class="insight-white">Total revenue:</span> <span class="insight-lime">$115,431.58</span> (average check: <span class="insight-lime">$31.75</span>).</li>
+              <li><span class="insight-white">Live currency:</span> prices convert to KZT using the current USD/KZT rate shown in the banner.</li>
+              <li><span class="insight-white">Scope:</span> focuses on transaction volume, revenue and payment methods — there are no city, cost or profit fields in the source data.</li>
+            </ul>
+          </article>
+
+          <article class="analysis-card card">
+            <h3>Key Findings</h3>
+            <ul>
+              <li>Top revenue: <span class="insight-white">Latte</span> leads with <span class="insight-lime">$27,866.30</span> (<span class="insight-lavender">782 cups</span>).</li>
+              <li>Most popular: <span class="insight-white">Americano with Milk</span> leads by volume with <span class="insight-lavender">824 cups</span> (<span class="insight-lime">$25,269.12</span>).</li>
+              <li>Peak months: <span class="insight-white">October 2024</span> was highest at <span class="insight-lime">$13,891.16</span> (<span class="insight-lavender">426 transactions</span>), followed closely by <span class="insight-white">February 2025</span>.</li>
+              <li>Category split: Coffee drives <span class="insight-lime">~84%</span> of revenue; <span class="insight-white">hot chocolate and cocoa</span> make up the remaining <span class="insight-lavender">~16%</span>.</li>
+            </ul>
+          </article>
+
+          <article class="analysis-card card">
+            <h3>Customer Behaviour</h3>
+            <ul>
+              <li>Card dominance: <span class="insight-white">3,547 of 3,636</span> transactions (<span class="insight-lime">~98%</span>, <span class="insight-lime">$112,245.58</span>) were paid by card; only <span class="insight-white">89</span> used cash.</li>
+              <li>Seasonality: activity peaks in <span class="insight-white">October and February</span> and drops to its lowest in <span class="insight-white">January and April</span>.</li>
+            </ul>
+          </article>
+
+          <article class="analysis-card card">
+            <h3>Conclusions</h3>
+            <ul>
+              <li>Menu focus: revenue is concentrated in <span class="insight-white">8 drinks</span>, led by <span class="insight-white">Latte</span>, <span class="insight-white">Americano with Milk</span> and <span class="insight-white">Cappuccino</span>.</li>
+              <li>Card-first promos: since <span class="insight-lime">~98%</span> of orders are by card, digital receipts and card-linked loyalty perks will reach almost everyone.</li>
+              <li>Staffing: scale staff up for <span class="insight-white">October and February</span> peaks and trim shifts in <span class="insight-white">January and April</span>.</li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <p>Author: Ырысбек Санжар, Ақылбаев Карим</p>
+        <p>Course: Information and Communication Technologies (ICT)</p>
+        <p>Narxoz University, School of Digital Technologies</p>
+        <p>Educational program: ICT rus1</p>
+        <p>&copy; 2026 SalesPulse. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- BACKGROUND MUSIC -->
+  <div class="music-player" id="music-player" aria-label="Background music controls">
+    <button class="music-btn" id="music-toggle" aria-label="Play background music" title="Play/Pause">
+      <span id="music-icon">▶</span>
+    </button>
+    <input type="range" class="music-volume" id="music-volume" min="0" max="100" value="30" aria-label="Volume">
+    <button class="music-btn" id="music-mute" aria-label="Mute" title="Mute/Unmute">
+      <span id="mute-icon">🔊</span>
+    </button>
+  </div>
+  <audio id="bg-music" src="assets/audio/ambient.wav" loop preload="none"></audio>
+
+  <!-- FLOATING CHATBOT -->
+  <div class="chat-float" id="chat-float">
+    <button class="chat-float-btn" id="chat-float-btn" aria-label="Open chat assistant">💬</button>
+    <div class="chat-float-window" id="chat-float-window" hidden>
+      <div class="chat-float-header">
+        <span>SalesPulse Assistant</span>
+        <button class="chat-float-close" id="chat-float-close" aria-label="Close chat">&times;</button>
+      </div>
+      <div class="chat-float-messages" id="chat-float-messages"></div>
+      <div class="chat-float-quick">
+        <button class="chat-quick-btn" data-msg="What is this site about?">What is this site about?</button>
+        <button class="chat-quick-btn" data-msg="Explain KPIs">Explain KPIs</button>
+        <button class="chat-quick-btn" data-msg="How do I read the charts?">How do I read the charts?</button>
+      </div>
+      <div class="chat-float-input-row">
+        <input type="text" id="chat-float-input" placeholder="Ask a question…" aria-label="Type a message">
+        <button id="chat-float-send" aria-label="Send">➤</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPTS -->
+  <script src="js/data.js"></script>
+  <script src="js/currency.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/select.js"></script>
+  <script src="js/analytics.js"></script>
+</body>
+</html>

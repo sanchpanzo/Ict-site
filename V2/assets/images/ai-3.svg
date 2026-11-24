@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500" role="img" aria-label="Coffee Analytics Interface">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#18181C"/>
+      <stop offset="1" stop-color="#24242B"/>
+    </linearGradient>
+    <linearGradient id="glow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#723BFA" stop-opacity="0"/>
+      <stop offset="0.5" stop-color="#723BFA" stop-opacity="0.65"/>
+      <stop offset="1" stop-color="#B9F500" stop-opacity="0.22"/>
+    </linearGradient>
+  </defs>
+  <rect width="800" height="500" fill="url(#bg)"/>
+  <g opacity="0.16" stroke="#FFFFFF" stroke-width="1">
+    <line x1="0" y1="100" x2="800" y2="100"/><line x1="0" y1="200" x2="800" y2="200"/><line x1="0" y1="300" x2="800" y2="300"/><line x1="0" y1="400" x2="800" y2="400"/>
+    <line x1="100" y1="0" x2="100" y2="500"/><line x1="200" y1="0" x2="200" y2="500"/><line x1="300" y1="0" x2="300" y2="500"/><line x1="400" y1="0" x2="400" y2="500"/><line x1="500" y1="0" x2="500" y2="500"/><line x1="600" y1="0" x2="600" y2="500"/><line x1="700" y1="0" x2="700" y2="500"/>
+  </g>
+  <circle cx="640" cy="120" r="150" fill="#723BFA" opacity="0.18"/>
+  <rect x="40" y="40" width="720" height="420" rx="18" fill="none" stroke="#B9F500" stroke-opacity="0.35" stroke-dasharray="8 7"/>
+  <path d="M80 300 L210 210 L340 260 L470 150 L600 205 L720 110" fill="none" stroke="url(#glow)" stroke-width="5" stroke-linecap="round"/>
+  <rect x="92" y="302" width="20" height="58" rx="6" fill="#723BFA" opacity="0.55"/><rect x="126" y="264" width="20" height="96" rx="6" fill="#B9F500" opacity="0.6000000000000001"/><rect x="160" y="286" width="20" height="74" rx="6" fill="#723BFA" opacity="0.65"/><rect x="194" y="228" width="20" height="132" rx="6" fill="#B9F500" opacity="0.7000000000000001"/><rect x="228" y="252" width="20" height="108" rx="6" fill="#723BFA" opacity="0.75"/><rect x="262" y="196" width="20" height="164" rx="6" fill="#B9F500" opacity="0.8"/><rect x="296" y="218" width="20" height="142" rx="6" fill="#723BFA" opacity="0.8500000000000001"/>
+  <text x="400" y="96" font-family="Segoe UI, sans-serif" font-size="52" fill="#B9F500" text-anchor="middle">☕</text>
+  <text x="400" y="142" font-family="Poppins, Segoe UI, sans-serif" font-size="25" font-weight="700" fill="#FFFFFF" text-anchor="middle">Coffee Analytics Interface</text>
+  <text x="400" y="430" font-family="Inter, Segoe UI, sans-serif" font-size="14" fill="#A9A9B4" text-anchor="middle">Tableau analytics · café setting</text>
+</svg>

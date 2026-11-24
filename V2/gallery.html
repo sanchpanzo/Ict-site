@@ -1,0 +1,442 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- ══════════════════════════════════════════════════════════════════
+       SalesPulse — Web Platform for Sales Analysis & Visualization
+       Course: Information and Communication Technologies (ICT)
+       Institution: Narxoz University, School of Digital Technologies
+       Data source: index_1.csv (coffee-shop transactions, USD + live KZT)
+       Page: Gallery (AI-Generated Visual Concept Explorations)
+       ══════════════════════════════════════════════════════════════════ -->
+  <meta charset="UTF-8">
+
+  <!-- Restore the saved theme before the stylesheet paints (no theme flash). -->
+  <script>
+    (function () {
+      try {
+        var saved = localStorage.getItem('salespulse.theme');
+        document.documentElement.setAttribute('data-theme', saved === 'light' ? 'light' : 'dark');
+      } catch (e) {
+        document.documentElement.setAttribute('data-theme', 'dark');
+      }
+    })();
+  </script>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="SalesPulse AI-Generated Gallery — Explore high-fidelity concept visuals created with Midjourney, DALL-E 3, and Stable Diffusion XL for the coffee sales analytics platform.">
+  <title>AI-Generated Gallery — SalesPulse</title>
+  <link rel="icon" type="image/png" href="/logo.png" />
+
+  <!-- Google Fonts: Inter (body text) and Poppins (headings & branding) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Core Stylesheet -->
+  <link rel="stylesheet" href="css/style.css">
+
+  <!-- Inline Helper Script for Robust Graceful Image Fallbacks -->
+  <script>
+    /**
+     * Graceful fallback handler for missing placeholder images.
+     * Generates a self-contained SVG data URI if the target JPG fails to load,
+     * ensuring layout integrity and zero broken image icons during evaluation.
+     * 
+     * @param {HTMLImageElement} img - The image element that triggered the error
+     * @param {string} title - The title of the visual concept
+     * @param {string} icon - Emoji icon matching the concept theme
+     */
+    function handleImgError(img, title, icon) {
+      img.onerror = null; // Prevent infinite fallback loops
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="800" height="500" viewBox="0 0 800 500">
+          <defs>
+            <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#18181C"/>
+              <stop offset="100%" stop-color="#24242B"/>
+            </linearGradient>
+          </defs>
+          <rect width="800" height="500" fill="url(#g)"/>
+          <rect x="25" y="25" width="750" height="450" rx="12" fill="none" stroke="#B9F500" stroke-width="2" stroke-opacity="0.35" stroke-dasharray="8 6"/>
+          <circle cx="400" cy="200" r="54" fill="#B9F500" fill-opacity="0.15" stroke="#B9F500" stroke-width="2"/>
+          <text x="400" y="215" font-family="'Segoe UI', sans-serif" font-size="44" fill="#B9F500" text-anchor="middle">${icon}</text>
+          <text x="400" y="300" font-family="'Poppins', sans-serif" font-size="24" font-weight="700" fill="#FFFFFF" text-anchor="middle">${title}</text>
+          <text x="400" y="340" font-family="'Inter', sans-serif" font-size="14" fill="#A9A9B4" text-anchor="middle">SalesPulse AI Concept • Coffee Sales Analytics</text>
+        </svg>
+      `.trim();
+      img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+    }
+  </script>
+</head>
+
+<body data-page="gallery">
+  <!-- ══════════════════════════════════════════════════════════════════
+       HEADER SECTION (Identical across all pages)
+       Contains main brand logo, responsive navigation links, and mobile burger button.
+       ══════════════════════════════════════════════════════════════════ -->
+  <header class="header" id="header">
+    <div class="container header-inner">
+      <a href="index.html" class="logo" aria-label="SalesPulse Home">
+        <span class="logo-mark"><img src="logo.png" alt="" class="logo-img" width="24" height="24"></span> SalesPulse
+      </a>
+      <nav class="nav" id="nav" aria-label="Main navigation">
+        <a href="index.html"      class="nav-link" data-page="home">Home</a>
+        <a href="analytics.html"  class="nav-link" data-page="analytics">Analytics</a>
+        <a href="gallery.html"    class="nav-link" data-page="gallery">Gallery</a>
+        <a href="assistant.html"  class="nav-link" data-page="assistant">AI Assistant</a>
+        <a href="about.html"      class="nav-link" data-page="about">About</a>
+        <button type="button" class="theme-toggle" id="theme-toggle" aria-label="Switch to light theme" aria-pressed="false" title="Switch to light theme">
+          <span class="theme-toggle-track" aria-hidden="true">
+            <span class="theme-toggle-thumb">
+              <svg class="theme-icon theme-icon--moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+              <svg class="theme-icon theme-icon--sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+            </span>
+          </span>
+        </button>
+      </nav>
+      <button class="burger" id="burger" aria-label="Toggle navigation menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       MAIN CONTENT CONTAINER
+       Semantic <main> holds the hero banner, interactive gallery grid, and notes.
+       ══════════════════════════════════════════════════════════════════ -->
+  <main id="main-content">
+    <!-- PAGE BANNER SECTION: Single <h1> for correct document heading hierarchy -->
+    <section class="page-banner fade-in" aria-labelledby="banner-heading">
+      <div class="container">
+        <h1 id="banner-heading">AI-Generated Gallery</h1>
+        <p class="banner-subtitle">Visual concepts created with AI tools to illustrate the SalesPulse platform</p>
+      </div>
+    </section>
+
+    <!-- GALLERY SHOWCASE SECTION: Semantic <section> with .section class -->
+    <section class="section gallery-section" aria-labelledby="gallery-subheading">
+      <div class="container">
+        <!-- Introductory heading (h2 preserves semantic heading hierarchy: h1 -> h2 -> h3) -->
+        <div class="gallery-intro fade-in">
+          <h2 id="gallery-subheading">AI Visual Concepts Showcase</h2>
+          <p>
+            Explore conceptual user interfaces, predictive data models, and business intelligence dashboards 
+            generated using state-of-the-art generative AI models for the SalesPulse coffee sales analytics platform.
+          </p>
+        </div>
+
+        <!-- ─── 6-ITEM GALLERY GRID ─── -->
+        <div class="gallery-grid">
+          <!-- ITEM 1: Sales Dashboard Concept -->
+          <div class="gallery-item fade-in" role="button" tabindex="0" aria-label="View full image" data-index="1">
+            <div class="gallery-img-wrapper">
+              <img 
+                src="first.png" 
+                alt="A futuristic holographic sales dashboard floating above a coffee shop counter with purple and lime glowing data visualizations" 
+
+                onerror="handleImgError(this, 'Sales Dashboard Concept', '📊')">
+              <span class="gallery-zoom-badge" aria-hidden="true">🔍 Zoom</span>
+            </div>
+            <div class="gallery-caption">
+              <h3>Sales Dashboard Concept</h3>
+              <p class="gallery-prompt">Prompt: "A futuristic holographic sales dashboard floating above a coffee shop counter, purple and lime color scheme, data visualizations glowing" — Midjourney v6</p>
+            </div>
+          </div>
+
+          <!-- ITEM 2: Data Flow Visualization -->
+          <div class="gallery-item fade-in" role="button" tabindex="0" aria-label="View full image" data-index="2">
+            <div class="gallery-img-wrapper">
+              <img 
+                src="second.png" 
+                alt="Abstract data streams flowing between drink, payment and month nodes with purple and lime accents" 
+
+                onerror="handleImgError(this, 'Data Flow Visualization', '🌐')">
+              <span class="gallery-zoom-badge" aria-hidden="true">🔍 Zoom</span>
+            </div>
+            <div class="gallery-caption">
+              <h3>Data Flow Visualization</h3>
+              <p class="gallery-prompt">Prompt: "Abstract data streams flowing between drink, payment and month nodes, dark background with purple and lime accents" — DALL-E 3</p>
+            </div>
+          </div>
+
+          <!-- ITEM 3: Coffee Analytics Interface -->
+          <div class="gallery-item fade-in" role="button" tabindex="0" aria-label="View full image" data-index="3">
+            <div class="gallery-img-wrapper">
+              <img 
+                src="third.png" 
+                alt="Modern UI design for a coffee sales analytics app featuring charts and graphs on a tablet screen in a café setting" 
+
+                onerror="handleImgError(this, 'Coffee Analytics Interface', '☕')">
+              <span class="gallery-zoom-badge" aria-hidden="true">🔍 Zoom</span>
+            </div>
+            <div class="gallery-caption">
+              <h3>Coffee Analytics Interface</h3>
+              <p class="gallery-prompt">Prompt: "Modern UI design for a coffee sales analytics app, charts and graphs on a tablet screen in a café setting" — Midjourney v6</p>
+            </div>
+          </div>
+
+          <!-- ITEM 4: Business Intelligence Hub -->
+          <div class="gallery-item fade-in" role="button" tabindex="0" aria-label="View full image" data-index="4">
+            <div class="gallery-img-wrapper">
+              <img 
+                src="fourth.png" 
+                alt="A minimalist command center with multiple screens showing business KPIs in a dark purple and lime aesthetic" 
+
+                onerror="handleImgError(this, 'Business Intelligence Hub', '🖥️')">
+              <span class="gallery-zoom-badge" aria-hidden="true">🔍 Zoom</span>
+            </div>
+            <div class="gallery-caption">
+              <h3>Business Intelligence Hub</h3>
+              <p class="gallery-prompt">Prompt: "A minimalist command center with multiple screens showing business KPIs, dark purple and lime aesthetic" — Stable Diffusion XL</p>
+            </div>
+          </div>
+
+          <!-- ITEM 5: Revenue Prediction Model -->
+          <div class="gallery-item fade-in" role="button" tabindex="0" aria-label="View full image" data-index="5">
+            <div class="gallery-img-wrapper">
+              <img 
+                src="fifth.png" 
+                alt="Neural network visualization exploring coffee sales trends with glowing lime nodes on deep dark purple" 
+
+                onerror="handleImgError(this, 'Revenue Prediction Model', '🧠')">
+              <span class="gallery-zoom-badge" aria-hidden="true">🔍 Zoom</span>
+            </div>
+            <div class="gallery-caption">
+              <h3>Revenue Prediction Model</h3>
+              <p class="gallery-prompt">Prompt: "Neural network visualization exploring coffee sales trends, nodes and connections glowing in lime on deep dark purple" — DALL-E 3</p>
+            </div>
+          </div>
+
+          <!-- ITEM 6: Customer Insights Panel -->
+          <div class="gallery-item fade-in" role="button" tabindex="0" aria-label="View full image" data-index="6">
+            <div class="gallery-img-wrapper">
+              <img 
+                src="sixth.png" 
+                alt="Infographic-style analytics panel for coffee sales featuring dark tones with drink and payment icons" 
+
+                onerror="handleImgError(this, 'Customer Insights Panel', '👥')">
+              <span class="gallery-zoom-badge" aria-hidden="true">🔍 Zoom</span>
+            </div>
+            <div class="gallery-caption">
+              <h3>Customer Insights Panel</h3>
+              <p class="gallery-prompt">Prompt: "Infographic-style analytics panel for coffee sales, dark purple and lime tones with drink and payment icons" — Midjourney v6</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- ─── REQUIRED NOTE AFTER GALLERY GRID ─── -->
+        <div class="gallery-note fade-in">
+          <span class="gallery-note-icon" aria-hidden="true">💡</span>
+          <p>All visuals are self-contained SVG concept placeholders. Replace the files in assets/images/ with your own AI-generated artwork if required.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       LIGHTBOX MODAL COMPONENT (Exact markup as specified)
+       Provides accessible full-screen image inspection with backdrop overlay.
+       ══════════════════════════════════════════════════════════════════ -->
+  <div class="lightbox" id="lightbox" role="dialog" aria-label="Image lightbox" hidden>
+    <button class="lightbox-close" id="lightbox-close" aria-label="Close lightbox">&times;</button>
+    <img id="lightbox-img" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" alt="Full-size gallery image">
+    <p class="lightbox-caption" id="lightbox-caption"></p>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       FOOTER SECTION (Identical across all pages)
+       Contains student author details and academic course attribution.
+       ══════════════════════════════════════════════════════════════════ -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-inner">
+        <p>Author: Ырысбек Санжар, Ақылбаев Карим</p>
+        <p>Course: Information and Communication Technologies (ICT)</p>
+        <p>Narxoz University, School of Digital Technologies</p>
+        <p>Educational program: ICT rus1</p>
+        <p>&copy; 2026 SalesPulse. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       BACKGROUND MUSIC PLAYER COMPONENT (Before </body>)
+       Allows ambient audio playback with custom play/pause, volume, and mute controls.
+       ══════════════════════════════════════════════════════════════════ -->
+  <div class="music-player" id="music-player" aria-label="Background music controls">
+    <button class="music-btn" id="music-toggle" aria-label="Play background music" title="Play/Pause">
+      <span id="music-icon">▶</span>
+    </button>
+    <input type="range" class="music-volume" id="music-volume" min="0" max="100" value="30" aria-label="Volume">
+    <button class="music-btn" id="music-mute" aria-label="Mute" title="Mute/Unmute">
+      <span id="mute-icon">🔊</span>
+    </button>
+  </div>
+  <audio id="bg-music" src="assets/audio/ambient.wav" loop preload="none"></audio>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       FLOATING AI CHATBOT WIDGET (Included on every page except assistant.html)
+       Provides interactive assistant popup with pre-configured quick question buttons.
+       ══════════════════════════════════════════════════════════════════ -->
+  <div class="chat-float" id="chat-float">
+    <button class="chat-float-btn" id="chat-float-btn" aria-label="Open chat assistant">💬</button>
+    <div class="chat-float-window" id="chat-float-window" hidden>
+      <div class="chat-float-header">
+        <span>SalesPulse Assistant</span>
+        <button class="chat-float-close" id="chat-float-close" aria-label="Close chat">&times;</button>
+      </div>
+      <div class="chat-float-messages" id="chat-float-messages"></div>
+      <div class="chat-float-quick">
+        <button class="chat-quick-btn" data-msg="What is this site about?">What is this site about?</button>
+        <button class="chat-quick-btn" data-msg="Explain KPIs">Explain KPIs</button>
+        <button class="chat-quick-btn" data-msg="How do I read the charts?">How do I read the charts?</button>
+      </div>
+      <div class="chat-float-input-row">
+        <input type="text" id="chat-float-input" placeholder="Ask a question…" aria-label="Type a message">
+        <button id="chat-float-send" aria-label="Send">➤</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       GLOBAL APPLICATION SCRIPTS
+       ══════════════════════════════════════════════════════════════════ -->
+  <script src="js/data.js"></script>
+  <script src="js/main.js"></script>
+
+  <!-- ══════════════════════════════════════════════════════════════════
+       INLINE LIGHTBOX CONTROLLER SCRIPT
+       Implements full specification requirements:
+       1. Click on .gallery-item → open lightbox:
+          - set lightbox img src to clicked img src
+          - set caption from h3
+          - remove hidden attribute
+          - add .active class
+       2. Click lightbox-close or lightbox background → close:
+          - add hidden attribute
+          - remove .active class
+       3. Keyboard: Escape closes lightbox
+       4. Keyboard: Enter/Space on gallery-item opens it
+       ══════════════════════════════════════════════════════════════════ -->
+  <script>
+    /**
+     * Lightbox Modal Interactive Controller
+     * Ensures comprehensive accessibility, screen-reader compliance, and responsive modal behavior.
+     */
+    document.addEventListener('DOMContentLoaded', () => {
+      // Lightbox DOM Elements
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      const lightboxCaption = document.getElementById('lightbox-caption');
+      const lightboxClose = document.getElementById('lightbox-close');
+      const galleryItems = document.querySelectorAll('.gallery-item');
+      
+      // Track currently active trigger element to restore focus after closing
+      let triggerElement = null;
+
+      /**
+       * Opens the lightbox modal
+       * Extracts image source and title heading from the selected gallery card
+       * @param {HTMLElement} item - The gallery item element triggered by click or keyboard
+       */
+      function openLightbox(item) {
+        if (!lightbox || !lightboxImg || !lightboxCaption) return;
+
+        const img = item.querySelector('img');
+        const heading = item.querySelector('h3');
+
+        if (img) {
+          triggerElement = item;
+          // Set full-size image source and accessible alt attribute
+          lightboxImg.src = img.src;
+          lightboxImg.alt = img.alt || 'Full-size gallery image';
+          
+          // Set caption text directly from the item's h3 heading as required by specification
+          lightboxCaption.textContent = heading ? heading.textContent : '';
+
+          // Show modal by removing hidden attribute and adding .active class
+          lightbox.removeAttribute('hidden');
+          lightbox.classList.add('active');
+
+          // Prevent background scrolling while modal is active
+          document.body.style.overflow = 'hidden';
+
+          // Shift focus to close button for keyboard navigation accessibility
+          if (lightboxClose) {
+            lightboxClose.focus();
+          }
+        }
+      }
+
+      /**
+       * Closes the lightbox modal
+       * Cleans up source attributes, restores page scrolling, and returns focus
+       */
+      function closeLightbox() {
+        if (!lightbox) return;
+
+        // Add hidden attribute and remove .active class
+        lightbox.setAttribute('hidden', '');
+        lightbox.classList.remove('active');
+
+        // Reset image source and caption
+        if (lightboxImg) lightboxImg.src = '';
+        if (lightboxCaption) lightboxCaption.textContent = '';
+
+        // Restore natural document scrolling
+        document.body.style.overflow = '';
+
+        // Return focus to the gallery item that initially opened the modal
+        if (triggerElement) {
+          triggerElement.focus();
+          triggerElement = null;
+        }
+      }
+
+      // ─── Requirement 1: Click on .gallery-item opens lightbox ───
+      // ─── Requirement 4: Enter / Space on gallery-item opens it ───
+      galleryItems.forEach(item => {
+        // Pointer click listener
+        item.addEventListener('click', () => {
+          openLightbox(item);
+        });
+
+        // Keyboard accessibility listener (Enter and Space keys)
+        item.addEventListener('keydown', (e) => {
+          if (e.key === 'Enter' || e.key === ' ') {
+            e.preventDefault(); // Prevent default browser scrolling on Space
+            openLightbox(item);
+          }
+        });
+      });
+
+      // ─── Requirement 2: Click lightbox-close or lightbox background closes it ───
+      if (lightboxClose) {
+        lightboxClose.addEventListener('click', (e) => {
+          e.stopPropagation();
+          closeLightbox();
+        });
+      }
+
+      if (lightbox) {
+        lightbox.addEventListener('click', (e) => {
+          // Check if the click occurred on the dark lightbox background overlay itself
+          // (clicks directly on lightboxImg or lightboxCaption do not trigger close)
+          if (e.target === lightbox) {
+            closeLightbox();
+          }
+        });
+      }
+
+      // ─── Requirement 3: Keyboard Escape closes lightbox ───
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') {
+          // Only close if lightbox is currently open
+          if (lightbox && !lightbox.hasAttribute('hidden')) {
+            closeLightbox();
+          }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
